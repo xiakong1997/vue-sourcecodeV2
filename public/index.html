@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app" style="background-color: red;">
+        <div>{{fullName}}</div>
+    </div>
+
+    <script src='../dist/vue.js'></script>
+    <script>
+        // Vue.mixin({
+        //     beforeCreate(){
+        //         console.log('mixin的方法1')
+        //     }
+        // })
+        // Vue.mixin({
+        //     beforeCreate(){
+        //         console.log('mixin的方法2')
+        //     }
+        // })
+        Vue.component("my-button", {
+            template: "<button>hello</button>"
+        })
+        let vm = new Vue({
+            el: '#app',
+            components: {
+                "my-button": {
+                    template: "<button>world</button>"
+                }
+            },
+            data() {
+                return {
+                    // name: "zqk"
+                    firstName: 'zzzz',
+                    lastName: 'kkkkk'
+
+                }
+            },
+            // watch:{
+            //     name(newValue,oldValue){
+            //          console.log(newValue,oldValue)
+            //     }
+            // },
+            computed: {
+                fullName: {
+                    get() {
+                        return this.firstName + this.lastName
+                    }
+                }
+            },
+            beforeCreate() {
+                console.log('内部的方法3')
+            }
+        })
+    </script>
+</body>
+
+</html>

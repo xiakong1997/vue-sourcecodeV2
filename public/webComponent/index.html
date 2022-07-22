@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <zf-button type="primary">珠峰按钮</zf-button>
+
+
+    <template id="btn"> 
+          <button class="zf-button">
+              <slot>默认按钮</slot>
+          </button>
+    </template>
+    <script>
+        class ZfButton extends HTMLElement {
+            constructor() {
+                super()
+                let shadow = this.attachShadow({
+                    mode: "close"
+                })
+                let btnTmpl = document.getElementById("btn")
+                let cloneTempl = btnTmpl.content.cloneNode(true)
+                const style = document.createElement("style")
+
+                let type = this.getAttribute('type') || 'undifined'
+                let btnlist = {
+                   "primary": {
+                       background:"#409eff",
+                       color:"#fff"
+                   }
+                } 
+                style.textContent = `
+                 .zf-button{
+                     outline:none;
+                     border:none;
+                     border-radius:4px;
+                     padding:5px 20px;
+                     display:inline-flex; 
+                     background:${btnlist[type].background};
+                     color:${btnlist[type].color};
+                 }
+                
+                `
+                shadow.appendChild(cloneTempl)
+                shadow.appendChild(style)
+            }
+        }
+        window.customElements.define("zf-button", ZfButton)
+    </script>
+</body>
+
+</html>

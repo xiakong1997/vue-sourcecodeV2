@@ -1,0 +1,5 @@
+{
+    "presets": [
+        "@babel/preset-env"//将es6的语法转化成es5
+    ]
+}
