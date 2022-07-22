@@ -10,7 +10,7 @@
 
 <body>
     <div id="app" style="background-color: red;">
-        <div>{{fullName}}</div>
+        <my-button></my-button>
     </div>
 
     <script src='../dist/vue.js'></script>
@@ -49,11 +49,11 @@
             //     }
             // },
             computed: {
-                fullName: {
-                    get() {
-                        return this.firstName + this.lastName
-                    }
-                }
+                // fullName: {
+                //     get() {
+                //         return this.firstName + this.lastName
+                //     }
+                // }
             },
             beforeCreate() {
                 console.log('内部的方法3')

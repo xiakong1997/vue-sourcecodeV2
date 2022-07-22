@@ -1,4 +1,8 @@
 export function patch(oldVnode,vnode) {
+    debugger
+    if(!oldVnode){
+        return createElm(vnode)
+    }
  // 判断传入的oldVnode是否是一个真实元素
   // 这里很关键  初次渲染 传入的vm.$el就是咱们传入的el选项  所以是真实dom
   // 如果不是初始渲染而是视图更新的时候  vm.$el就被替换成了更新之前的老的虚拟dom
@@ -20,10 +24,22 @@ export function patch(oldVnode,vnode) {
     return el;
   }
 }
-
+function createComponent(vnode) {
+    let i = vnode.data
+    if((i = i.hook) && (i = i.init)){
+        i(vnode)
+    }
+    if(vnode.componentInstance){
+        return true
+    }
+  }
 function createElm(vnode) { 
     let { tag, data, key, children, text } = vnode;
-    if(typeof tag === 'string') {  //tag为string 说明是元素节点
+    if(typeof tag === 'string') {  //tag为string 说明可能是是元素节点 也可能是自定义组件
+
+        if(createComponent(vnode)){  //如果创建的是自定义组件，那么返回创建完成的自定义组件的真实dom
+            return vnode.componentInstance.$el
+        }
         vnode.el = document.createElement(tag) //将生成的真实dom 放到vnode的el属性上
         // 解析虚拟dom属性
         updateProperties(vnode);

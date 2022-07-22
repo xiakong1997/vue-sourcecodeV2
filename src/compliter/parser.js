@@ -13,56 +13,56 @@ const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/ //匹配花括号 {{a}}
 //     generate
 // } from "./codegen"
 
-function creatASTelement(tagName,attrs) {  //创建AST元素
-  return {
-    tag:tagName,
-    type:1,//元素标签的nodeType为1 文本为3
-    attrs,
-    children:[],
-    parent
-  }
- }
-
-
-let root  = null
-let stack = []
-function start(tagName, attributes) {
-  let parent = stack[stack.length - 1]
-  let element = creatASTelement(tagName,attributes)
-  if(!root){
-    root = element
-  }
-  element.parent = parent
-  if(parent){
-    parent.children.push(element)
-  }
-  stack.push(element)
-}
-
-function end(tagName) {
-
-let last = stack.pop()
-
-if(last.tag !== tagName){
-    throw new Error("标签有误")
-}
-}
-
-function chars(text) {
-  text = text.replace(/\s/g,"")
-  let parent = stack[stack.length - 1]
-  if(text){
-       parent.children.push({
-         type:3, 
-         text
-       })
-  }
-}
-
 
 
 export function parserHTML(html) {
-
+  function creatASTelement(tagName,attrs) {  //创建AST元素
+    return {
+      tag:tagName,
+      type:1,//元素标签的nodeType为1 文本为3
+      attrs,
+      children:[],
+      parent
+    }
+   }
+  
+  
+  let root  = null
+  let stack = []
+  function start(tagName, attributes) {
+    let parent = stack[stack.length - 1]
+    let element = creatASTelement(tagName,attributes)
+    if(!root){
+      root = element
+    }
+    element.parent = parent
+    if(parent){
+      parent.children.push(element)
+    }
+    stack.push(element)
+  }
+  
+  function end(tagName) {
+  
+  let last = stack.pop()
+  
+  if(last.tag !== tagName){
+      throw new Error("标签有误")
+  }
+  }
+  
+  function chars(text) {
+    text = text.replace(/\s/g,"")
+    let parent = stack[stack.length - 1]
+    if(text){
+         parent.children.push({
+           type:3, 
+           text
+         })
+    }
+  }
+  
+  
   function advance(length) {
     html = html.substring(length)
   }

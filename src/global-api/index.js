@@ -18,8 +18,8 @@ export function initGlobalApi(Vue) {
 
     Vue.extend = function (opts) {
         const Super = this
-        const Sub = function VueComponent() {
-            this._init()
+        const Sub = function VueComponent(comopt) {
+            this._init(comopt)
         }
         Sub.prototype = Object.create(Super.prototype)
         Sub.prototype.constructor = Sub

@@ -14,8 +14,9 @@ import {
 export function initMixin(Vue) {
     Vue.prototype._init = function (options) {
         let vm = this
+    
         vm.$options = mergeOptions(this.constructor.options, options)
-        console.log(vm.$options)
+        
         callHooks(vm, 'beforeCreate')  //生命周期钩子函数
 
         initState(vm)
@@ -40,9 +41,10 @@ export function initMixin(Vue) {
             let template = options.template
             if (!template && el) {
                 template = el.outerHTML
-                let render = complieToFunction(template) //模板编译，生成render函数
-                options.render = render
+              
             }
+            let render = complieToFunction(template) //模板编译，生成render函数
+            options.render = render
 
         }
 

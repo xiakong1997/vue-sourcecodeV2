@@ -68,11 +68,11 @@ lifeCycleHooks.forEach((hook) => {
   strats[hook] = mergeHook
 })
 strats['components'] = function (parentVal, childVal) {
-    let newObj = Object.create(parentVal)
-    for(let key in childVal){
-      newObj[key] = childVal[key]
-    }
-    return newObj
+  let newObj = Object.create(parentVal)
+  for (let key in childVal) {
+    newObj[key] = childVal[key]
+  }
+  return newObj
 }
 
 function mergeHook(parentVal, childVal) {
@@ -88,6 +88,7 @@ function mergeHook(parentVal, childVal) {
 }
 
 export function mergeOptions(parent, child) {
+
   const options = {}
   for (let key in parent) {
     mergeField(key)
@@ -102,7 +103,7 @@ export function mergeOptions(parent, child) {
 
   function mergeField(key) {
     let parentVal = parent[key]
-    let childVal = child[key]
+    let childVal = child[key] 
 
 
     if (strats[key]) {
@@ -114,11 +115,16 @@ export function mergeOptions(parent, child) {
           ...childVal
         }
       } else {
-        options[key] = childVal
+
+        options[key] = childVal || parentVal
       }
     }
 
   }
 
   return options
+}
+export function isReservedTag(tag) {
+  const reserveTag = "a,ul,li,div,p,span,button"
+  return reserveTag.includes(tag)
 }

@@ -34,6 +34,7 @@ function gen(el) {
 
 
 function genProps(attrs) { //来拼接属性
+
     let str = "";
     for (let i = 0; i < attrs.length; i++) {
         let attr = attrs[i] //{name:id,value:app}
@@ -62,11 +63,14 @@ function genChildren(el) {
 
 
 export function generate(el) {
- 
+
+
+    //执行_c("my_button",{},"")的时候 执行了 createElm(vnode) 创建自定义组件的方法  vm.$mount 会重新生成一个render函数
+
     //将ast树 通过字符串拼接的方法 转换成 下面的形势
     //_c('div',{id:"app"},_c('div',undefined,_v("hello"+_s(name)),_c('span',undefined,_v("world"))))
     let children = genChildren(el)
     let code = `_c('${el.tag}',${el.attrs ? genProps(el.attrs):'undefined'}${children? `,${children}`:""})`
-
+     console.log(code)
     return code
 }
