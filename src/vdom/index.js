@@ -26,7 +26,7 @@ export function createElement(vm, tag, data = {}, ...children) {
   }
 
 }
-
+//创建组件标签的vnode
 function createComponent(vm, tag, data, key, children, Ctor) {
   if (isObject(Ctor)) { //如果ctor是一个对象，需要用extend方法将这个对象作为组件options传入，生成一个组件构造函数
     Ctor = vm.$options._base.extend(Ctor)

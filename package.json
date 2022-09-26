@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "rollup -c -w",
-    "test": "jest"
+    "serve": "rollup -c -w"
+    
   },
   "keywords": [],
   "author": "",

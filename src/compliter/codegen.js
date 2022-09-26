@@ -71,6 +71,6 @@ export function generate(el) {
     //_c('div',{id:"app"},_c('div',undefined,_v("hello"+_s(name)),_c('span',undefined,_v("world"))))
     let children = genChildren(el)
     let code = `_c('${el.tag}',${el.attrs ? genProps(el.attrs):'undefined'}${children? `,${children}`:""})`
-     console.log(code)
+    //  console.log(code)
     return code
 }

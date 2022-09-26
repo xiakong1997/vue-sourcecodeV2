@@ -52,7 +52,7 @@ function defineReactive(data, key, value) {
         get() { 
            if(Dep.target){   //实际上是当前缓存在全局的一个watcher
               dep.depend()  // 将当前数据的dep存在watcher的dep数组中，将watcher放到相应dep的watcher数组中
-              console.log(dep)
+            //   console.log(dep)
               if(childOb){   //主要是为了data中的数组嵌套数组
                   childOb.dep.depend()
                   //如果value是[[1,2,3]]，数组里面套数组，那么需要对里层的数组也进行依赖收集

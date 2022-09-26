@@ -13,7 +13,7 @@ export function initGlobalApi(Vue) {
     Vue.component = function (id, definetion) { // 调佣这个方法可以生成一个vue的component
         //通过extend 产生一个继承Vue构造函数的  子类构造函数 sub， 用这个sub去生成一个Vue的实例
         this.options.components[id] = this.options._base.extend(definetion)
-        console.log(this.options,1212)
+        // console.log(this.options,1212)
     }
 
     Vue.extend = function (opts) {

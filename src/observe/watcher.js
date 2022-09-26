@@ -36,7 +36,7 @@ class Watcher {
     get() {
         pushTarget(this) //将Dep.target变成 watcher
         let value = this.getter.call(this.vm) // 使用render的时候，_s方法会往vm上去取值，所以会触发一开始对属性添加的get方法,使用call方法将this指向vm
-        console.log(this.getter,'value')
+        // console.log(this.getter,'value')
         popTarget() //将Dep.target == null
         return value
     }
@@ -74,7 +74,7 @@ class Watcher {
      while(i--){
          this.deps[i].depend()
      }
-     console.log(this.deps)
+    //  console.log(this.deps)
     }
 }
 

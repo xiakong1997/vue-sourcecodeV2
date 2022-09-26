@@ -9,12 +9,13 @@
 </head>
 
 <body>
-    <div id="app" style="background-color: red;">
-        <my-button></my-button>
-    </div>
+    <!-- <div id="app" style="background-color: red;">
+      
+        <p>{{firstName}}</p>
+    </div> -->
 
     <script src='../dist/vue.js'></script>
-    <script>
+    <!-- <script>
         // Vue.mixin({
         //     beforeCreate(){
         //         console.log('mixin的方法1')
@@ -25,16 +26,16 @@
         //         console.log('mixin的方法2')
         //     }
         // })
-        Vue.component("my-button", {
-            template: "<button>hello</button>"
-        })
+        // Vue.component("my-button", {
+        //     template: "<button>hello</button>"
+        // })
         let vm = new Vue({
             el: '#app',
-            components: {
-                "my-button": {
-                    template: "<button>world</button>"
-                }
-            },
+            // components: {
+            //     "my-button": {
+            //         template: "<button>world</button>"
+            //     }
+            // },
             data() {
                 return {
                     // name: "zqk"
@@ -59,7 +60,7 @@
                 console.log('内部的方法3')
             }
         })
-    </script>
+    </script> -->
 </body>
 
 </html>
