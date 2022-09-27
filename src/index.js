@@ -40,10 +40,9 @@ import {
 
 
 let oldTempalte = `<div>
-
-<li key="B">B</li>
 <li key="C">C</li>
 <li key="A">A</li>
+<li key="B">B</li>
 <li key="D">D</li> 
 </div>`
 let vm1 = new Vue({
@@ -58,9 +57,9 @@ document.body.appendChild(createElm(oldVnode))
 
 
 let newTempalte = `<div>
-<li key="D">D</li>
 <li key="B">B</li>
 <li key="C">C</li>
+<li key="D">D</li>
 <li key="A">A</li>
 </div>`
 let vm2 = new Vue({

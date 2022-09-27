@@ -22,7 +22,6 @@ export function patch(oldVnode, vnode) {
 
         return el;
     } else {
-        debugger
         //diff的核心代码
         //新老虚拟dom的标签不一样
         if (oldVnode.tag != vnode.tag) {
@@ -82,8 +81,26 @@ function patchChild(el, oldChildren, newChildren) {
     let newEndIndex = newChildren.length - 1
     let newEndVnode = newChildren[newEndIndex]
 
+    const makeIndexByKey = (oldChildren) => {   //该方法生成一个vnode 的key 和 index的映射，
+        return oldChildren.reduce((pre, next, index) => {
+            if (next.key) {
+                pre[next.key] = index 
+            }
+            return pre
+        }, {})
+    }
+    const keysMap = makeIndexByKey(oldChildren)
+
     //比较还可以进行下去
     while (oldStartIndex <= oldEndIndex && newStartIndex <= newEndIndex) {
+       
+        if(!oldStartVnode){
+            oldStartVnode = oldChildren[++oldStartIndex]
+        }else if(!oldEndVnode){
+            oldEndVnode = oldChildren[--oldEndIndex]
+        }
+
+
         if (isSameVnode(oldStartVnode, newStartVnode)) { //旧头和新头 头头比较
             patch(oldStartVnode, newStartVnode)
             oldStartVnode = oldChildren[++oldStartIndex] //先加再用
@@ -102,8 +119,18 @@ function patchChild(el, oldChildren, newChildren) {
             el.insertBefore(oldEndVnode.el, oldStartVnode.el)
             oldEndVnode = oldChildren[--oldEndIndex]
             newStartVnode = newChildren[++newStartIndex]
-        }else{
+        } else {
             //乱序对比，diff核心
+            let moveIndex = keysMap[newStartVnode.key]
+            if(moveIndex == undefined){ // 新的节点相同key在老的节点中不存在，所以新增在老的节点的最前面
+              el.insertBefore(createElm(newStartVnode),oldStartVnode.el)
+            }else{  //老的节点中存在相同的key值，可以进行复用
+              let moveNode = oldChildren[moveIndex]
+              oldChildren[moveIndex] = null  //将原位置的节点设置为null，保证指针不混乱
+              el.insertBefore(moveNode.el,oldStartVnode.el)
+              patch(moveNode,newStartVnode)
+            }
+            newStartVnode = newChildren[++newStartIndex]
         }
     }
     //新的节点个数比老的个数要多，需要新增  1. A B C D 和 A B C D E   2. A B C D 和 E A B C D
@@ -117,7 +144,7 @@ function patchChild(el, oldChildren, newChildren) {
     //旧的节点 比新的多，说明有阶段需要删除     A B C D    和 A B C
     if (oldStartIndex <= oldEndIndex) {
         for (let i = oldStartIndex; i <= oldEndIndex; i++) {
-            el.removeChild(oldChildren[i].el)
+           if(oldChildren[i] != null)  el.removeChild(oldChildren[i].el)
         }
     }
 }

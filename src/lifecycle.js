@@ -11,7 +11,15 @@ export function lifecycleMixin(Vue) {
   Vue.prototype._update = function (vnode) {
     const vm = this;
     // patch是渲染vnode为真实dom核心
-    vm.$el = patch(vm.$el, vnode)
+    let preVnode = vm._vnode
+    if(!preVnode){
+      //说明是首次渲染
+      vm._vnode = vnode
+      vm.$el = patch(vm.$el, vnode)
+    }else{
+      vm.$el = patch(preVnode, vnode)
+    }
+    
   };
   Vue.prototype.$nextTick = nextTick
 }
